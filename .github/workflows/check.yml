@@ -1,0 +1,16 @@
+name: Factory same-head retry preflight
+on:
+  push:
+    branches: [operator/ci-step-deadline]
+permissions: {}
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Install dependencies
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          if [ "$GITHUB_RUN_ATTEMPT" = 1 ]; then sleep 180; fi
+          echo "Disposable timeout fixture completed"
